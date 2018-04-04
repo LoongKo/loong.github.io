@@ -49,6 +49,10 @@
           return out;   
         }
         var qr_content = toUtf8($('#qr_content').val());
+        if (qr_content === '') {
+          alert('请输入链接或者文字');
+          return;
+        }
         $('#qrcode').empty().qrcode(qr_content).append('<p>（请自行截图分享）</p>');
       });
     });
