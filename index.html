@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>二维码生成器</title>
+  <meta name="viewport" content="width=device-width,user-scalable=no">
+  <meta charset="utf-8">
+  <script type="text/javascript" src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript" src="http://www.jq22.com/js/jquery.qrcode.min.js"></script>
+  <style type="text/css">
+    textarea{
+      resize: none;
+      width: 90%;
+      height: 100px;
+      outline:none;
+    }
+    body{
+      text-align: center;
+    }
+    #qr_bt{
+      width: 92%;
+      height: 35px;
+      border: none;
+      background-color: #2ECC71;
+      font-size: 1.2em;
+      outline: none;
+    }
+  </style>
+  <script type="text/javascript">
+    $(function(){
+      $('#qr_bt').click(function(){
+        //处理中文乱码函数
+        function toUtf8(str) {   
+          var out, i, len, c;   
+          out = "";   
+          len = str.length;   
+          for(i = 0; i < len; i++) {   
+            c = str.charCodeAt(i);   
+            if ((c >= 0x0001) && (c <= 0x007F)) {   
+                out += str.charAt(i);   
+            } else if (c > 0x07FF) {   
+                out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));   
+                out += String.fromCharCode(0x80 | ((c >>  6) & 0x3F));   
+                out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));   
+            } else {   
+                out += String.fromCharCode(0xC0 | ((c >>  6) & 0x1F));   
+                out += String.fromCharCode(0x80 | ((c >>  0) & 0x3F));   
+            }   
+          }   
+          return out;   
+        }
+        var qr_content = toUtf8($('#qr_content').val());
+        $('#qrcode').empty().qrcode(qr_content).append('<p>（请自行截图分享）</p>');
+      });
+    });
+  </script>
+</head>
+<body>
+<h1>二维码生成器</h1>
+<textarea id="qr_content"></textarea>
+<p><input type="button" value="点击生成" id="qr_bt"></p>
+<div id="qrcode"></div>
+</body>
+</html>
